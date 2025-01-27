@@ -1,33 +1,49 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trading Journal</title>
-</head>
-<body>
-    <h1>Welcome to Your Journal</h1>
-    <table>
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        font-size: 18px;
+        text-align: left;
+    }
+    th, td {
+        padding: 12px;
+        border: 1px solid #ddd;
+    }
+    th {
+        background-color: #f4f4f4;
+    }
+    tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+</style>
+<table>
+    <thead>
         <tr>
             <th>Account</th>
             <th>Name</th>
+            <th>Symbol</th>
             <th>Opening Balance</th>
             <th>Gain</th>
             <th>Profit</th>
             <th>Closing Balance</th>
-            <th>Opening Date/Time</th>
+            <th>Opened</th>
+            <th>Closed</th>
         </tr>
-        {% for entry in data %}
+    </thead>
+    <tbody>
+        {% for row in data %}
         <tr>
-            <td>{{ entry[0] }}</td>
-            <td>{{ entry[1] }}</td>
-            <td>{{ entry[2] }}</td>
-            <td>{{ entry[3] }}</td>
-            <td>{{ entry[4] }}</td>
-            <td>{{ entry[5] }}</td>
-            <td>{{ entry[6] }}</td>
+            <td>{{ row[1] }}</td>
+            <td>{{ row[2] }}</td>
+            <td>{{ row[7] }}</td>
+            <td>{{ row[3] }}</td>
+            <td>{{ row[4] }}</td>
+            <td>{{ row[5] }}</td>
+            <td>{{ row[6] }}</td>
+            <td>{{ row[8] }}</td>
+            <td>{{ row[9] }}</td>
         </tr>
         {% endfor %}
-    </table>
-</body>
-</html>
+    </tbody>
+</table>
