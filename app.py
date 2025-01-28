@@ -5,7 +5,6 @@ from dotenv import load_dotenv
 import os
 from datetime import datetime
 import logging
-
 # Load environment variables from .env file
 load_dotenv()
 
@@ -46,9 +45,18 @@ def get_journal_data():
     conn = sqlite3.connect('trading_journal.db')
     cursor = conn.cursor()
     cursor.execute('SELECT * FROM journal')
-    data = cursor.fetchall()
+    raw_data = cursor.fetchall()
     conn.close()
+
+    # Parse opened and closed timestamps
+    data = [
+        list(row[:8]) + 
+        [datetime.fromisoformat(row[8]) if row[8] else None, 
+         datetime.fromisoformat(row[9]) if row[9] else None]
+        for row in raw_data
+    ]
     return data
+
 
 def update_journal(account, name, opening_balance, gain, profit, closing_balance, symbol, opened, closed):
     conn = sqlite3.connect('trading_journal.db')
@@ -108,8 +116,8 @@ def fetch_account_data():
         account = account_info.login
         name = "Tebogo"  # Replace with actual name
         opening_balance = account_info.balance
-        gain = (account_info.profit / account_info.balance * 100) if account_info.balance > 0 else 0
-        profit = account_info.profit
+        gain = (position.profit / opening_balance * 100) if account_info.balance > 0 else 0
+        profit = position.profit
         closing_balance = account_info.equity
         symbol = position.symbol
         opened = datetime.fromtimestamp(position.time)
@@ -135,6 +143,7 @@ def fetch_position_data():
     closed = datetime.fromtimestamp(position.time_update) if position.time_update > 0 else None
 
     return symbol, opened, closed
+
 
 
 @app.route('/')

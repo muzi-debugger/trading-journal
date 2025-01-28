@@ -17,6 +17,7 @@
         background-color: #f9f9f9;
     }
 </style>
+
 <table>
     <thead>
         <tr>
@@ -24,7 +25,7 @@
             <th>Name</th>
             <th>Symbol</th>
             <th>Opening Balance</th>
-            <th>Gain</th>
+            <th>Gain (%)</th>
             <th>Profit</th>
             <th>Closing Balance</th>
             <th>Opened</th>
@@ -37,12 +38,13 @@
             <td>{{ row[1] }}</td>
             <td>{{ row[2] }}</td>
             <td>{{ row[7] }}</td>
-            <td>{{ row[3] }}</td>
-            <td>{{ row[4] }}</td>
-            <td>{{ row[5] }}</td>
-            <td>{{ row[6] }}</td>
-            <td>{{ row[8] }}</td>
-            <td>{{ row[9] }}</td>
+            <td>${{ "%.2f" | format(row[3]) }}</td>
+            <td>{{ "%.2f" | format(row[4]) }}%</td>
+            <td>${{ "%.2f" | format(row[5]) }}</td>
+            <td>${{ "%.2f" | format(row[6]) }}</td>
+            <td>{{ row[8].strftime('%Y-%m-%d %H:%M:%S') if row[8] else '' }}</td>
+            <td>{{ row[9].strftime('%Y-%m-%d %H:%M:%S') if row[9] else 'Open' }}</td>
+
         </tr>
         {% endfor %}
     </tbody>
